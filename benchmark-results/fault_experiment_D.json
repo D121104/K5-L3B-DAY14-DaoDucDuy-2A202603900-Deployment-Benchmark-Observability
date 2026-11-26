@@ -1,0 +1,10 @@
+{
+  "experiment": "D",
+  "fault": "docker pause k5-day14-observability-agent-2",
+  "alert": "AgentInstanceDown",
+  "state": "firing",
+  "active_at": "2026-11-26T10:35:02.401817116Z",
+  "observed_firing_at": "2026-11-26T10:35:34.365254+00:00",
+  "elapsed_seconds_from_pause": 42.1,
+  "instance_label": "172.27.0.8:8000"
+}

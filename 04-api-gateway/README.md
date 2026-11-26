@@ -51,7 +51,12 @@ production/
 ```bash
 cd production
 pip install -r requirements.txt
-python app.py
+
+# Mở terminal riêng cho Redis (đổi host port nếu 6379 đang được dùng)
+docker run --rm --name api-gateway-redis -p 16379:6379 redis:7-alpine
+
+# Terminal ứng dụng
+REDIS_URL=redis://localhost:16379/0 python app.py
 
 # Lấy JWT token
 curl -X POST http://localhost:8000/auth/token \
@@ -101,3 +106,5 @@ Request
 1. Khi nào nên dùng API Key vs JWT vs OAuth2?
 2. Rate limit nên đặt bao nhiêu request/phút cho một AI agent?
 3. Nếu API key bị lộ, bạn phát hiện và xử lý như thế nào?
+
+Cost guard của ví dụ advanced lưu token usage trong Redis theo tháng UTC, mặc định giới hạn $10/user/tháng và reset khi sang tháng mới. Dừng Redis sau bài lab bằng `docker stop api-gateway-redis`.

@@ -1,0 +1,32 @@
+name: eval-quality-gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install evaluation dependencies
+        working-directory: 06-lab-complete/benchmark-observability/develop
+        run: pip install -r requirements.txt
+      - name: Run v2 agent and quality gate
+        working-directory: 06-lab-complete/benchmark-observability/develop
+        run: |
+          AGENT_VERSION=v2 MOCK_ERROR_RATE=0 MOCK_SLOW_RATE=0 python app.py >/tmp/agent.log 2>&1 &
+          agent_pid=$!
+          trap 'kill "$agent_pid" 2>/dev/null || true; wait "$agent_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8000/health >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/health >/dev/null || { cat /tmp/agent.log; exit 1; }
+          python eval/run_eval.py --url http://127.0.0.1:8000 --min-accuracy 0.85

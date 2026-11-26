@@ -1,0 +1,18 @@
+{
+  "experiment": "E",
+  "fault": "AGENT_VERSION=v1",
+  "health": {
+    "status": "ok",
+    "version": "1.0.0",
+    "agent_version": "v1",
+    "instance": "f0f22a14b526"
+  },
+  "ask_statuses": [
+    200,
+    200,
+    200
+  ],
+  "firing_alerts": [],
+  "quality_gate_artifact": "../develop/reports/eval_v1_gate.json",
+  "quality_gate_passed": false
+}

@@ -37,7 +37,11 @@ import uvicorn
 
 from auth import verify_token, authenticate_user, create_token
 from rate_limiter import rate_limiter_user, rate_limiter_admin
-from cost_guard import cost_guard
+from cost_guard import (
+    PRICE_PER_1K_INPUT_TOKENS,
+    PRICE_PER_1K_OUTPUT_TOKENS,
+    cost_guard,
+)
 from utils.mock_llm import ask
 
 logging.basicConfig(level=logging.INFO)
@@ -141,23 +145,36 @@ async def ask_agent(
     limiter = rate_limiter_admin if role == "admin" else rate_limiter_user
     rate_info = limiter.check(username)
 
-    # ✅ Cost check trước khi gọi LLM
-    cost_guard.check_budget(username)
+    input_tokens = len(body.question.split()) * 2
+    estimated_output_tokens = max(20, input_tokens * 2)
+    estimated_cost = (
+        input_tokens * PRICE_PER_1K_INPUT_TOKENS
+        + estimated_output_tokens * PRICE_PER_1K_OUTPUT_TOKENS
+    ) / 1000
+    if not cost_guard.check_budget(username, estimated_cost):
+        raise HTTPException(402, "Monthly budget exceeded")
 
     # Gọi LLM (mock)
-    response_text = ask(body.question)
+    try:
+        response_text = ask(body.question)
+    except Exception:
+        cost_guard.release_reservation(username, estimated_cost)
+        raise
 
     # ✅ Ghi nhận usage (mock token count)
-    input_tokens = len(body.question.split()) * 2
     output_tokens = len(response_text.split()) * 2
-    usage = cost_guard.record_usage(username, input_tokens, output_tokens)
+    usage = cost_guard.record_usage(
+        username, input_tokens, output_tokens, estimated_cost=estimated_cost
+    )
 
     return {
         "question": body.question,
         "answer": response_text,
         "usage": {
             "requests_remaining": rate_info["remaining"],
-            "budget_remaining_usd": usage.total_cost_usd,
+            "budget_remaining_usd": max(
+                0, cost_guard.monthly_budget_per_user_usd - usage.total_cost_usd
+            ),
         },
     }
 
@@ -174,9 +191,9 @@ def admin_stats(user: dict = Depends(verify_token)):
     if user["role"] != "admin":
         raise HTTPException(403, "Admin only")
     return {
-        "total_users": "N/A (in-memory demo)",
+        "total_users": "N/A (usage stored in Redis)",
         "global_cost_usd": cost_guard._global_cost,
-        "global_budget_usd": cost_guard.global_daily_budget_usd,
+        "global_budget_usd": cost_guard.global_monthly_budget_usd,
     }
 
 

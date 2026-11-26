@@ -1,0 +1,63 @@
+{
+  "experiment": "B",
+  "fault": "MOCK_SLOW_RATE=0.3",
+  "alert": "AgentHighLatencyP95",
+  "state": "firing",
+  "active_at": "2026-11-26T10:26:22.401817116Z",
+  "fired_at": "2026-11-26T10:28:22.429122+00:00",
+  "elapsed_seconds_from_load_start": 132.1,
+  "screenshot": "screenshots/prometheus-alert-p95.png",
+  "locust_stats": [
+    {
+      "avg_content_length": 405.4629535002555,
+      "avg_response_time": 621.6032194123696,
+      "current_fail_per_sec": 0.0,
+      "current_rps": 15.2,
+      "max_response_time": 1769.0,
+      "median_response_time": 200,
+      "method": "POST",
+      "min_response_time": 96.0,
+      "name": "/ask",
+      "num_failures": 14,
+      "num_requests": 1957,
+      "response_time_percentile_0.95": 1700,
+      "response_time_percentile_0.99": 1700,
+      "total_fail_per_sec": 0.10540837589290149,
+      "total_rps": 14.734585115886302
+    },
+    {
+      "avg_content_length": 80.0,
+      "avg_response_time": 2.627844180997705,
+      "current_fail_per_sec": 0.0,
+      "current_rps": 1.5,
+      "max_response_time": 9.0,
+      "median_response_time": 3,
+      "method": "GET",
+      "min_response_time": 1.0,
+      "name": "/health",
+      "num_failures": 0,
+      "num_requests": 210,
+      "response_time_percentile_0.95": 3,
+      "response_time_percentile_0.99": 7,
+      "total_fail_per_sec": 0.0,
+      "total_rps": 1.5811256383935224
+    },
+    {
+      "avg_content_length": 373.9229349330872,
+      "avg_response_time": 561.6194497775799,
+      "current_fail_per_sec": 0.0,
+      "current_rps": 16.7,
+      "max_response_time": 1769.0,
+      "median_response_time": 200,
+      "method": "",
+      "min_response_time": 1.0,
+      "name": "Aggregated",
+      "num_failures": 14,
+      "num_requests": 2167,
+      "response_time_percentile_0.95": 1700,
+      "response_time_percentile_0.99": 1700,
+      "total_fail_per_sec": 0.10540837589290149,
+      "total_rps": 16.315710754279824
+    }
+  ]
+}

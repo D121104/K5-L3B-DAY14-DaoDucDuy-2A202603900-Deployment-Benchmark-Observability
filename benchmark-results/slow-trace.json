@@ -1,0 +1,189 @@
+{
+  "trace_id": "0dadee55e7fe10983684585d5ddf42ba",
+  "root_duration_ms": 1723.69,
+  "spans": [
+    {
+      "traceId": "0dadee55e7fe10983684585d5ddf42ba",
+      "spanId": "8338829bed725dff",
+      "parentSpanId": "fe2835d5cd622ab3",
+      "flags": 256,
+      "name": "agent.retrieve_context",
+      "kind": 1,
+      "startTimeUnixNano": "1795688898826351316",
+      "endTimeUnixNano": "1795688898847530157",
+      "attributes": [
+        {
+          "key": "retrieval.documents",
+          "value": {
+            "intValue": "1"
+          }
+        }
+      ],
+      "status": {}
+    },
+    {
+      "traceId": "0dadee55e7fe10983684585d5ddf42ba",
+      "spanId": "cd187c92bce4bc63",
+      "parentSpanId": "fe2835d5cd622ab3",
+      "flags": 256,
+      "name": "chat mock-llm-small",
+      "kind": 1,
+      "startTimeUnixNano": "1795688898847613444",
+      "endTimeUnixNano": "1795688900530911928",
+      "attributes": [
+        {
+          "key": "gen_ai.operation.name",
+          "value": {
+            "stringValue": "chat"
+          }
+        },
+        {
+          "key": "gen_ai.provider.name",
+          "value": {
+            "stringValue": "mock"
+          }
+        },
+        {
+          "key": "gen_ai.request.model",
+          "value": {
+            "stringValue": "mock-llm-small"
+          }
+        },
+        {
+          "key": "gen_ai.usage.input_tokens",
+          "value": {
+            "intValue": "76"
+          }
+        },
+        {
+          "key": "gen_ai.usage.output_tokens",
+          "value": {
+            "intValue": "39"
+          }
+        },
+        {
+          "key": "llm.cost_usd",
+          "value": {
+            "doubleValue": 3.48e-05
+          }
+        }
+      ],
+      "status": {}
+    },
+    {
+      "traceId": "0dadee55e7fe10983684585d5ddf42ba",
+      "spanId": "fe2835d5cd622ab3",
+      "parentSpanId": "75aed95e09b8e8ca",
+      "flags": 256,
+      "name": "agent.run",
+      "kind": 1,
+      "startTimeUnixNano": "1795688898826317933",
+      "endTimeUnixNano": "1795688900531030491",
+      "attributes": [
+        {
+          "key": "agent.question.length",
+          "value": {
+            "intValue": "44"
+          }
+        },
+        {
+          "key": "agent.version",
+          "value": {
+            "stringValue": "v2"
+          }
+        }
+      ],
+      "status": {}
+    },
+    {
+      "traceId": "0dadee55e7fe10983684585d5ddf42ba",
+      "spanId": "75aed95e09b8e8ca",
+      "flags": 256,
+      "name": "POST /ask",
+      "kind": 2,
+      "startTimeUnixNano": "1795688898809021331",
+      "endTimeUnixNano": "1795688900532713610",
+      "attributes": [
+        {
+          "key": "http.flavor",
+          "value": {
+            "stringValue": "1.1"
+          }
+        },
+        {
+          "key": "http.host",
+          "value": {
+            "stringValue": "172.27.0.5:8000"
+          }
+        },
+        {
+          "key": "http.method",
+          "value": {
+            "stringValue": "POST"
+          }
+        },
+        {
+          "key": "http.route",
+          "value": {
+            "stringValue": "/ask"
+          }
+        },
+        {
+          "key": "http.scheme",
+          "value": {
+            "stringValue": "http"
+          }
+        },
+        {
+          "key": "http.server_name",
+          "value": {
+            "stringValue": "nginx"
+          }
+        },
+        {
+          "key": "http.status_code",
+          "value": {
+            "intValue": "200"
+          }
+        },
+        {
+          "key": "http.target",
+          "value": {
+            "stringValue": "/ask"
+          }
+        },
+        {
+          "key": "http.url",
+          "value": {
+            "stringValue": "http://nginx/ask"
+          }
+        },
+        {
+          "key": "http.user_agent",
+          "value": {
+            "stringValue": "python-requests/2.34.2"
+          }
+        },
+        {
+          "key": "net.host.port",
+          "value": {
+            "intValue": "8000"
+          }
+        },
+        {
+          "key": "net.peer.ip",
+          "value": {
+            "stringValue": "172.27.0.6"
+          }
+        },
+        {
+          "key": "net.peer.port",
+          "value": {
+            "intValue": "41790"
+          }
+        }
+      ],
+      "status": {}
+    }
+  ]
+}

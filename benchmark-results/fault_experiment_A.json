@@ -1,0 +1,13 @@
+{
+  "experiment": "A",
+  "fault": "MOCK_ERROR_RATE=0.2",
+  "alert": "AgentHighErrorRate",
+  "state": "firing",
+  "swarm_started_at": "2026-11-26T10:20:34.279765+00:00",
+  "pending_active_at": "2026-11-26T10:20:42.401817+00:00",
+  "rule_for_seconds": 60,
+  "estimated_time_to_firing_seconds": 68.1,
+  "screenshot": "screenshots/prometheus-alert-error-rate.png",
+  "timing_note": "Derived from Prometheus activeAt plus the rule's 1-minute for duration; firing was observed in the screenshot/API.",
+  "other_alert_note": "LLMCostBurnRateHigh was already firing under default small-model scale-test traffic before this fault."
+}

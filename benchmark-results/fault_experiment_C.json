@@ -1,0 +1,19 @@
+{
+  "experiment": "C",
+  "fault": "LLM_MODEL=mock-llm-large",
+  "alert": "LLMCostBurnRateHigh",
+  "state": "firing",
+  "active_at": "2026-11-26T10:32:27.571501534Z",
+  "fired_at": "2026-11-26T10:34:29.318671+00:00",
+  "elapsed_seconds_from_load_start": 147.1,
+  "burn_rate_usd_per_hour": [
+    {
+      "metric": {},
+      "value": [
+        1795689269.319,
+        "16.12493899337445"
+      ]
+    }
+  ],
+  "screenshot": "screenshots/prometheus-alert-cost-burn.png"
+}

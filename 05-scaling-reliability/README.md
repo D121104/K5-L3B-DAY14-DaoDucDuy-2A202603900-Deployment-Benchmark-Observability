@@ -53,8 +53,8 @@ Hai kỹ năng cốt lõi để deploy AI Agent lên môi trường production:
 │    • GET  /ready   → readiness (503 nếu chưa sẵn sàng)│
 │    • POST /ask     → business logic (hỏi AI)        │
 ├─────────────────────────────────────────────────────┤
-│  Signal Handlers                                     │
-│    • SIGTERM / SIGINT → log + uvicorn tự shutdown    │
+│  Signal Handling                                     │
+│    • Uvicorn bắt SIGTERM/SIGINT và tự shutdown       │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -62,8 +62,8 @@ Hai kỹ năng cốt lõi để deploy AI Agent lên môi trường production:
 
 ```
 Platform gửi SIGTERM
-  → handle_sigterm() log thông tin
-  → uvicorn trigger lifespan shutdown
+  → Uvicorn ngừng nhận connection mới và đợi request đang chạy
+  → Uvicorn trigger lifespan shutdown
     → _is_ready = False
       (endpoint /ready trả 503 → load balancer ngừng gửi traffic mới)
     → chờ _in_flight_requests == 0 (tối đa 30 giây)
@@ -78,7 +78,7 @@ Platform gửi SIGTERM
 | `track_requests` middleware | Đếm số request đang xử lý, phối hợp với shutdown logic |
 | `_is_ready` flag | Cờ readiness, `False` khi startup chưa xong hoặc đang shutdown |
 | `_in_flight_requests` counter | Đếm request đang xử lý, shutdown chờ counter về 0 |
-| `handle_sigterm()` | Bắt SIGTERM/SIGINT, uvicorn tự trigger lifespan shutdown |
+| Uvicorn signal handling | Bắt SIGTERM/SIGINT, dừng nhận request mới và trigger lifespan shutdown; app không đăng ký handler riêng để tránh nuốt signal |
 
 ### Chạy
 
